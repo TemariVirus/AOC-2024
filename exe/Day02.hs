@@ -19,11 +19,11 @@ isReportSafe :: [Int] -> Bool
 isReportSafe report = isReportGradual report && isReportMonotonous report
 
 part1 :: String -> Int
-part1 input = length . filter id $ map isReportSafe $ parseInput input
+part1 input = length $ filter isReportSafe $ parseInput input
 
 removeOneOrNone :: [a] -> [[a]]
 removeOneOrNone [] = [[]]
 removeOneOrNone (x : xs) = xs : map (x :) (removeOneOrNone xs)
 
 part2 :: String -> Int
-part2 input = length . filter id $ map (any isReportSafe . removeOneOrNone) $ parseInput input
+part2 input = length $ filter (any isReportSafe . removeOneOrNone) $ parseInput input

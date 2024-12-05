@@ -6,13 +6,13 @@ import Data.Map qualified as Map
 
 parseLinePair :: String -> (Int, Int)
 parseLinePair line =
-  let w = words line
-   in (read $ w !! 0, read $ w !! 1)
+  let p1 : p2 : _ = words line
+   in (read p1, read p2)
 
 parsePairs :: String -> ([Int], [Int])
 parsePairs input =
   let pairs = map parseLinePair $ lines input
-   in (map fst pairs, map snd pairs)
+   in unzip pairs
 
 pairDiffSum :: ([Int], [Int]) -> Int -> Int
 pairDiffSum ([], []) acc = acc

@@ -1,6 +1,6 @@
 module Day05 where
 
-import Common (splitOn)
+import Common (isSorted, splitOn)
 import Data.List (sort, sortOn)
 import Data.Map qualified as Map
 import Data.Maybe (fromMaybe)
@@ -64,11 +64,6 @@ nodeToIndex graph update =
       indexMap = Map.fromList $ zip (totalOrdering graph') [0 ..]
       lookupAssume = fromMaybe (error "Unknown page") . (`Map.lookup` indexMap)
    in map lookupAssume update
-
-isSorted :: (Ord a) => [a] -> Bool
-isSorted arr = case arr of
-  x : y : _ -> x <= y && isSorted (tail arr)
-  _ -> True
 
 middle :: [a] -> a
 middle xs = xs !! (length xs `div` 2)

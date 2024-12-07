@@ -1,6 +1,6 @@
 module Day07 where
 
-import Common (splitOn)
+import Common (split)
 import Data.Int (Int64)
 
 type Op = Int64 -> Int64 -> Int64
@@ -9,7 +9,7 @@ parseInput :: String -> [(Int64, [Int64])]
 parseInput input =
   [ (read v, map read $ words nums)
     | line <- lines input,
-      [v, nums] <- [splitOn ": " line]
+      [v, nums] <- [split ": " line]
   ]
 
 combinations :: [a] -> Int -> [[a]]
@@ -20,10 +20,10 @@ combinations digits len =
 satisfiable :: [Op] -> Int64 -> [Int64] -> Bool
 satisfiable _ _ [] = False
 satisfiable ops total (x : xs) =
-  elem total
-    $ map
-      (foldl (\acc (n, op) -> acc `op` n) x . zip xs)
-    $ combinations ops (length xs)
+  total
+    `elem` [ foldl (\acc (n, op) -> acc `op` n) x $ zip xs ops'
+             | ops' <- combinations ops (length xs)
+           ]
 
 part1 :: String -> Int64
 part1 input =

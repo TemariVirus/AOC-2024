@@ -1,6 +1,6 @@
 module Day05 where
 
-import Common (isSorted, splitOn)
+import Common (isSorted, split)
 import Data.List (sort, sortOn)
 import Data.Map qualified as Map
 import Data.Maybe (fromMaybe)
@@ -10,15 +10,15 @@ type Graph = [(Int, Int)]
 
 parseOrdering :: String -> (Int, Int)
 parseOrdering line =
-  case (map read . splitOn "|") line of
+  case (map read . split "|") line of
     [a, b] -> (a, b)
     _ -> error "Invalid input"
 
 parseUpdate :: String -> [Int]
-parseUpdate = map read . splitOn ","
+parseUpdate = map read . split ","
 
 parseInput :: String -> (Graph, [[Int]])
-parseInput input = case (map lines . splitOn "\n\n") input of
+parseInput input = case (map lines . split "\n\n") input of
   [lines1, lines2] ->
     let orderings = map parseOrdering lines1
         updates = map parseUpdate lines2

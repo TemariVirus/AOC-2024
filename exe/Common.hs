@@ -2,20 +2,28 @@ module Common where
 
 import Data.Maybe (catMaybes, isJust)
 
-splitOn :: String -> String -> [String]
-splitOn delim = foldr (splitOn' delim) [""]
+startsWith :: (Eq a) => [a] -> [a] -> Bool
+startsWith _ [] = True
+startsWith [] _ = False
+startsWith (x : xs) (y : ys)
+  | x == y = startsWith xs ys
+  | otherwise = False
 
-splitOn' :: String -> Char -> [String] -> [String]
-splitOn' delim c (x : xs)
-  | take (length delim) (c : x) == delim =
-      "" : drop (length delim - 1) x : xs
-  | otherwise = (c : x) : xs
-splitOn' _ _ _ = error "splitOn': empty list"
+splitOnce :: (Eq a) => [a] -> [a] -> ([a], [a])
+splitOnce delim = go []
+  where
+    go acc [] = (reverse acc, [])
+    go acc str@(x : xs)
+      | str `startsWith` delim = (reverse acc, drop (length delim) str)
+      | otherwise = go (x : acc) xs
+
+split :: (Eq a) => [a] -> [a] -> [[a]]
+split _ [] = []
+split delim str = x : split delim xs where (x, xs) = splitOnce delim str
 
 isSorted :: (Ord a) => [a] -> Bool
-isSorted arr = case arr of
-  x : y : _ -> x <= y && isSorted (tail arr)
-  _ -> True
+isSorted arr@(x : y : _) = x <= y && isSorted (tail arr)
+isSorted _ = True
 
 windows :: Int -> [a] -> [[a]]
 windows n arr

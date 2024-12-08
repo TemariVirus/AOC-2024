@@ -25,6 +25,10 @@ isSorted :: (Ord a) => [a] -> Bool
 isSorted arr@(x : y : _) = x <= y && isSorted (tail arr)
 isSorted _ = True
 
+pairs :: [a] -> [(a, a)]
+pairs (x : xs) = [(x, y) | y <- xs] ++ pairs xs
+pairs _ = []
+
 windows :: Int -> [a] -> [[a]]
 windows n arr
   | length arr < n = []

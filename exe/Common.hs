@@ -36,3 +36,8 @@ windows n arr
 
 mapWhile :: (a -> Maybe b) -> [a] -> [b]
 mapWhile f = catMaybes . takeWhile isJust . map f
+
+interlace :: [a] -> [a] -> [a]
+interlace [] ys = ys
+interlace xs [] = xs
+interlace (x : xs) (y : ys) = x : y : interlace xs ys

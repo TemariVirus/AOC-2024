@@ -2,8 +2,8 @@ module Main where
 
 import Control.Monad.IO.Class (MonadIO (liftIO))
 import Data.Time (DiffTime, picosecondsToDiffTime)
-import Day11 (part1, part2)
-import System.CPUTime
+import Day12 (part1, part2)
+import System.CPUTime (getCPUTime)
 
 timeIt :: (MonadIO m) => m a -> m (DiffTime, a)
 timeIt ioa = do
@@ -20,6 +20,6 @@ timeItPure f x = do
 
 main :: IO ()
 main = do
-  input <- readFile "inputs/11.txt"
+  input <- readFile "inputs/12.txt"
   timeItPure part1 input
   timeItPure part2 input

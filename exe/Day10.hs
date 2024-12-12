@@ -20,7 +20,7 @@ hike rows pos =
   case rows !? pos of
     Nothing -> Set.empty
     Just 9 -> Set.singleton pos
-    Just h -> foldl1 Set.union . map (go h) $ neighbors pos
+    Just h -> foldr1 Set.union . map (go h) $ neighbors pos
   where
     go h pos' =
       case rows !? pos' of
@@ -45,7 +45,7 @@ hike2' acc rows pos =
   case rows !? pos of
     Nothing -> Set.empty
     Just 9 -> Set.singleton acc'
-    Just h -> foldl1 Set.union . map (go h) $ neighbors pos
+    Just h -> foldr1 Set.union . map (go h) $ neighbors pos
   where
     acc' = pos : acc
     go h pos' =
@@ -57,7 +57,7 @@ part2 :: String -> Int
 part2 input =
   let rows = parseInput input
    in Set.size $
-        foldl
+        foldr
           Set.union
           Set.empty
           [ hike2 rows (x, y)

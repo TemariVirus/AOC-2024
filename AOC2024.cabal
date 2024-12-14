@@ -33,6 +33,7 @@ executable AOC2024
         Day11
         Day12
         Day13
+        Day14
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:

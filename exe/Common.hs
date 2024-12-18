@@ -1,8 +1,12 @@
 module Common where
 
-import Data.Maybe (catMaybes, isJust)
+import Data.Map (Map)
+import Data.Map qualified as Map
+import Data.Maybe (catMaybes, fromJust, isJust)
 import Data.Sequence (Seq)
 import Data.Sequence qualified as Seq
+import Data.Set qualified as Set
+import Data.Tuple (swap)
 
 startsWith :: (Eq a) => [a] -> [a] -> Bool
 startsWith _ [] = True
@@ -54,3 +58,23 @@ binarySearchL lt arr = go 0 (length arr + 1)
            in if lt (arr `Seq.index` mid)
                 then go (mid + 1) hi
                 else go lo mid
+
+dijkstra :: (Ord a) => ((Int, a) -> [(Int, a)]) -> a -> Map a Int
+dijkstra neighbours start =
+  go
+    (Map.singleton start 0)
+    (Set.singleton (0, start))
+  where
+    go gs open =
+      -- Each node is stored as (g, node) so that the minimum has the lowest g
+      let current = fromJust (Set.lookupMin open)
+          ns =
+            filter
+              ( \(g, n) -> case Map.lookup n gs of
+                  Nothing -> True
+                  Just g' -> g < g'
+              )
+              $ neighbours current
+          gs' = Map.fromList (map swap ns) `Map.union` gs
+          open' = Set.fromList ns `Set.union` Set.delete current open
+       in if Set.null open then gs else go gs' open'

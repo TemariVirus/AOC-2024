@@ -2,7 +2,7 @@ module Day17 where
 
 import Common (split)
 import Data.Bits (Bits (shiftR), xor)
-import Data.Maybe (fromJust, isJust)
+import Data.Maybe (fromJust)
 import Data.Sequence (Seq)
 import Data.Sequence qualified as Seq
 

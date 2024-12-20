@@ -22,6 +22,9 @@ apply f (Vec2 (x, y)) = Vec2 (f x, f y)
 apply2 :: (Int -> Int -> Int) -> Vec2 -> Vec2 -> Vec2
 apply2 f (Vec2 (x1, y1)) (Vec2 (x2, y2)) = Vec2 (f x1 x2, f y1 y2)
 
+collapse :: (Int -> Int -> Int) -> Vec2 -> Int
+collapse f (Vec2 (x, y)) = f x y
+
 orthogonal :: Vec2 -> Bool
 orthogonal (Vec2 (x, y)) = x == 0 || y == 0
 

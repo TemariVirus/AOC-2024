@@ -35,6 +35,10 @@ pairs :: [a] -> [(a, a)]
 pairs (x : xs) = [(x, y) | y <- xs] ++ pairs xs
 pairs _ = []
 
+toPair :: [a] -> (a, a)
+toPair [x, y] = (x, y)
+toPair _ = error "Invalid input"
+
 windows :: Int -> [a] -> [[a]]
 windows n arr
   | length arr < n = []
